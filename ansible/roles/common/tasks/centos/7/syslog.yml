@@ -1,0 +1,31 @@
+---
+- include_role:
+    name: logrotate
+
+- name: Logrotate for syslog centos7
+  include_role:
+    name: logrotate
+  vars:
+    logrotate_scripts:
+      - name: syslog
+        path: 
+          /var/log/cron
+          /var/log/maillog
+          /var/log/messages
+          /var/log/secure
+          /var/log/spooler
+        options:
+          - daily
+          - compress
+          - dateext
+          - maxage 5
+          - rotate 5
+          - missingok
+          - notifempty
+          - size +500M
+          - create 640 root root
+          - sharedscripts
+        scripts:
+          postrotate: "/bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true"
+
+...

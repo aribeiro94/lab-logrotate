@@ -1,22 +1,5 @@
----
-- include_role:
-    name: logrotate
-
-- name: Pass variables to role logrotate
-  include_role:
-    name: logrotate
-  vars:
-    logrotate_scripts:
-      - name: nginx-teste
-        path: /var/log/nginx/access.log
-        options:
-          - daily
-          - weekly
-          - size 1k
-          - rotate 7
-          - missingok
-          - compress
-          - delaycompress
-          - copytruncate
-
-...
+- name: Include task for SO
+  import_tasks: centos/7/syslog.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+- import_tasks: suse/15/syslog.yml
+  when: ansible_distribution == 'openSUSE Leap'
