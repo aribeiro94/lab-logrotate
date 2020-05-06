@@ -1,20 +1,30 @@
 ---
-/export/logs/pagseguro-fe/*.log.????-??-??-?? {
-    su root nobody
-    rotate 50
-    daily
-    compress
-    nocreate
-    nodateext
-    dateext
-    dateformat 
-    ifempty
-    missingok
-    start 0
-    size 0
-    lastaction        
-        mv /export/logs/pagseguro-fe/*.log.*.gz /export/logs_gz/pagseguro-fe/
-        find /export/logs/pagseguro-fe/ -name "*.log.*.gz" -type f -mtime +50 -exec rm {} \;
-    endscript
-}
+- include_role:
+    name: logrotate
+
+- name: Logrotate for jboss apps
+  include_role:
+    name: logrotate
+  vars:
+    logrotate_scripts:
+      - name: pagseguro-fe
+        path: /export/logs/pagseguro-fe/*.log.????-??-??-??
+        options:
+          - su root nobody
+          - rotate 10
+          - daily
+          - compress
+          - nocreate
+          - nodateext
+          - dateext
+          - dateformat 
+          - ifempty
+          - missingok
+          - start 0
+          - size 0
+        scripts:
+          lastaction: " mv /export/logs/pagseguro-fe/*.log.*.gz /export/logs_gz/pagseguro-fe/ && find /export/logs/pagseguro-fe/ -name "*.log.*.gz" -type f -mtime +10 -exec rm {} \;"
+
 ...
+
+
