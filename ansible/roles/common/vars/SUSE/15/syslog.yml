@@ -1,0 +1,29 @@
+logs:
+  /var/log/warn
+  /var/log/messages
+  /var/log/allmessages
+  /var/log/localmessages
+  /var/log/firewall
+  /var/log/acpid
+  /var/log/NetworkManager
+  /var/log/mail
+  /var/log/mail.info
+  /var/log/mail.warn
+  /var/log/mail.err
+  /var/log/news/news.crit
+  /var/log/news/news.err
+  /var/log/news/news.notice
+
+options:
+  - daily
+  - compress
+  - dateext
+  - maxage 5
+  - rotate 5
+  - missingok
+  - notifempty
+  - size +500M
+  - create 640 root root
+  - sharedscripts
+
+scripts: "/usr/bin/systemctl reload syslog.service > /dev/null"

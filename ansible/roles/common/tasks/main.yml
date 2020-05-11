@@ -1,5 +1,3 @@
-- name: Include task for SO
-  import_tasks: centos/7/syslog.yml
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
-- import_tasks: suse/15/syslog.yml
-  when: ansible_distribution == 'openSUSE Leap'
+---
+- import_tasks: syslog.yml
+...

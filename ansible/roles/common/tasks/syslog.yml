@@ -1,0 +1,17 @@
+---
+- include_vars: "{{ ansible_distribution_file_variety }}/{{ ansible_distribution_major_version}}/syslog.yml"
+- include_role:
+    name: logrotate
+
+- name: "Logrotate for Syslog {{ ansible_distribution }}-{{ ansible_distribution_major_version}}"
+  include_role:
+    name: logrotate
+  vars:
+    logrotate_scripts:
+      - name: syslog
+        path: "{{ logs }}"
+        options: "{{ options }}"
+        scripts:
+          postrotate: "{{ scripts }}"
+
+...

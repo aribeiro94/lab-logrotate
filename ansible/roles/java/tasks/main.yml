@@ -1,0 +1,29 @@
+---
+- include_role:
+    name: logrotate
+
+- name: Logrotate for java_log
+  include_role:
+    name: logrotate
+  vars:
+    logrotate_scripts:
+      - name: "{{ java_log.app }}"
+        path: "{{ java_log.path }}/{{ java_log.log_rgx }}"
+        options:
+          - su root {{ java_log.user }}
+          - rotate {{ java_log.days }}
+          - daily
+          - compress
+          - nocreate
+          - nodateext
+          - dateext
+          - dateformat 
+          - ifempty
+          - missingok
+          - start 0
+          - size 0
+        scripts:
+          lastaction: "mv {{ java_log.path }}/*.log.*.gz {{ java_log.path_gz }} && find {{ java_log.path }} -name '*.log.*.gz' -type f -mtime {{ java_log.days }} | xargs rm -fv "
+...
+
+

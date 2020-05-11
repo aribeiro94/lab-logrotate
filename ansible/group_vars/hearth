@@ -1,0 +1,7 @@
+java_log:
+  app: 'pagseguro-be'
+  path: '/export/logs/pagseguro-be'
+  user: 'nobody'
+  log_rgx: '*.log.????-??-??-??'
+  path_gz: '/export/logs_gz/pagseguro-be'
+  days: '10'
